@@ -5,7 +5,7 @@ function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    weather.get('').then(
+    weather.get('/').then(
       resp => setMessage(resp.data)
     );
   }, []);
