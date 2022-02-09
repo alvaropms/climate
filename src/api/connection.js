@@ -1,17 +1,17 @@
 import axios from "axios";
 
-const key = (process.env.KEY).toString();
+const key = process.env.REACT_APP_KEY;
 const days = 3;
 const lang = 'pt';
 const aqi = 'no';
 const alerts = 'no';
 
 export const weather =  axios.create({
-    baseURL: (process.env.API_WEATHER_URL).toString()
+    baseURL: process.env.REACT_APP_API_WEATHER_URL
 });
 
 export const city = axios.create({
-    baseURL: (process.env.API_IP_URL).toString()
+    baseURL: process.env.REACT_APP_API_IP_URL
 });
 
 export async function getCity(){
