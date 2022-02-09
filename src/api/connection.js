@@ -1,17 +1,17 @@
 import axios from "axios";
 
-const key = process.env.KEY;
+const key = (process.env.KEY).toString();
 const days = 3;
 const lang = 'pt';
 const aqi = 'no';
 const alerts = 'no';
 
 export const weather =  axios.create({
-    baseURL: process.env.API_WEATHER_URL
+    baseURL: (process.env.API_WEATHER_URL).toString()
 });
 
 export const city = axios.create({
-    baseURL: process.env.API_IP_URL
+    baseURL: (process.env.API_IP_URL).toString()
 });
 
 export async function getCity(){
