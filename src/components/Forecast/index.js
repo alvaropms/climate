@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { formatDate } from "../../utilities/functions";
+import { StyledDiv } from "./styles";
 
 const Forecast = (props) => {
     const forecast = props.forecast;
@@ -12,7 +13,7 @@ const Forecast = (props) => {
                     <span>{formatDate(forecast.date)}</span>
                 </Card.Title>
                 <Card.Text>
-                    <div className="d-flex flex-row">
+                    <StyledDiv>
                         <div className="d-flex flex-column justify-content-center">
                             <div>
                                 <i className="me-1 bi bi-thermometer-high text-danger"></i>
@@ -23,11 +24,13 @@ const Forecast = (props) => {
                                 <span>{forecast.day.mintemp_c + 'º'}</span>
                             </div>
                         </div>
-                        <div className="">
+                        <div>
                             <img alt='icon' src={forecast.day.condition.icon}/>
                         </div>
-                    </div>
-                    <span>{forecast.day.condition.text}</span>
+                    </StyledDiv>
+                    <StyledDiv>
+                        <span>{forecast.day.condition.text}</span>
+                    </StyledDiv>
                 </Card.Text>
             </Card.Body>
         </Card>

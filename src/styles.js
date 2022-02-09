@@ -24,9 +24,8 @@ export const Title = styled.h2`
 `;
 
 export const PrincipalCard = styled(Card)`
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 600px;
+    margin: 0px auto;
 `;
 
 export const StyledForm = styled.form`

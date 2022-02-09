@@ -1,11 +1,30 @@
 import { useEffect, useState } from "react";
 import { getCity, getTempByName } from "./api/connection";
 import Forecast from "./components/Forecast";
-import { pad } from "./utilities/functions";
-import { GlobalStyles, Grid, Title, PrincipalCard, StyledForm} from "./styles";
+import { timestampToHour } from "./utilities/functions";
+import { GlobalStyles, Grid, Title as PageTitle, PrincipalCard, StyledForm} from "./styles";
 import {Navbar, Container, InputGroup, FormControl, Button,
   Card
 } from 'react-bootstrap';
+import { Line } from 'react-chartjs-2';
+import {Chart,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend} from 'chart.js';
+
+Chart.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function App() {
   const [search, setSearch] = useState('');
@@ -41,7 +60,7 @@ function App() {
           }
         );
       }
-    )
+    );
   }, []);
 
   async function changeCity(cityName){
@@ -51,11 +70,6 @@ function App() {
       },
       error => alert('Cidade não encontrada!')
     );
-  }
-
-  function timestampToHour(timestamp){
-    let date = new Date(timestamp);
-    return [date.getHours(), date.getMinutes()].map(pad).join(':');
   }
 
   return (
@@ -84,47 +98,83 @@ function App() {
     </Navbar>
 
     <Container>
-      <Title className="mt-3" >{response ? `Tempo agora em ${data.name}` : ''}<sup className="fs-5">{response ? `${data.country}` : ''}</sup></Title>
+      <PageTitle className="mt-3" >{response ? `Tempo agora em ${data.name}` : ''}<sup className="fs-5">{response ? `${data.country}` : ''}</sup></PageTitle>
 
-      <PrincipalCard bg={'dark'} text={'light'}>
-        <Card.Body>
-          <Card.Title className="text-center">
-            <img alt='icon' src={response ? data.icon : ''} />
-            <b className="fs-1">{response ? data.temp + "º" : ''}</b>
-            <span className="fs-6" >{response ? data.description: ''}</span>
-          </Card.Title>
-          <Card.Text className="d-flex flex-row flex-wrap justify-content-around">
-            <Grid column>
+      <PrincipalCard className='mb-1' bg={'dark'} text={'light'}>
+        <Card.Body className="d-flex flex-wrap justify-content-evenly">
+          <div>
+            <Card.Title className="text-center">
+              <img alt='icon' src={response ? data.icon : ''} />
+              <b className="fs-1">{response ? data.temp + "ºC" : ''}</b>
+            </Card.Title>
+            <Card.Text className="d-flex flex-row flex-wrap justify-content-around">
+              <span className="fs-6" >{response ? data.description: ''}</span>
+            </Card.Text>
+          </div>
+          <div>
+            <Card.Title style={{minHeight: '64px'}} className="fs-6 d-flex flex-row flex-wrap justify-content-around">
+              <Grid className="me-3" column>
+                <Grid>
+                  <i className="me-1 bi bi-thermometer-high text-danger"></i>
+                  <span>{response ? data.maxtemp + "ºC": ''}</span>
+                </Grid>
+                <Grid>
+                  <i className="me-1 bi bi-thermometer-low text-primary"></i>
+                  <span>{response ? data.mintemp + "ºC": ''}</span>
+                </Grid>
+                <Grid>
+                  <i className="me-1 bi bi-wind"></i>
+                  <span>{response ? data.windspeed + " km/h": ''}</span>
+                </Grid>
+              </Grid>
+              <Grid column>
               <Grid>
-                <i className="me-1 bi bi-thermometer-high text-danger"></i>
-                <span>{response ? data.maxtemp + "º": ''}</span>
+                  <i className="me-1 bi bi-speedometer2 text-success"></i>
+                  <span>{response ? data.pressure + " hPa": ''}</span>
+                </Grid>
+                <Grid>
+                  <i className="me-1 bi bi-droplet text-info"></i>
+                  <span>{response ? data.humidity + "%": ''}</span>
+                </Grid>
+                <Grid>
+                  <i className="me-1 text-warning bi bi-clock"></i>
+                  <span>{response ? timestampToHour(data.localtime) : ''}</span>
+                </Grid>
               </Grid>
-              <Grid>
-                <i className="me-1 bi bi-thermometer-low text-primary"></i>
-                <span>{response ? data.mintemp + "º": ''}</span>
-              </Grid>
-              <Grid>
-                <i className="me-1 bi bi-wind"></i>
-                <span>{response ? data.windspeed + " km/h": ''}</span>
-              </Grid>
-            </Grid>
-            <Grid column>
-            <Grid>
-                <i className="me-1 bi bi-speedometer2 text-success"></i>
-                <span>{response ? data.pressure + " hPa": ''}</span>
-              </Grid>
-              <Grid>
-                <i className="me-1 bi bi-droplet text-info"></i>
-                <span>{response ? data.humidity + "%": ''}</span>
-              </Grid>
-              <Grid>
-                <i className="me-1 text-warning bi bi-clock"></i>
-                <span>{response ? timestampToHour(data.localtime) : ''}</span>
-              </Grid>
-            </Grid>
-          </Card.Text>
+            </Card.Title>
+            <Card.Text className="fs-6 text-center">
+              {response ? response.forecast.forecastday[0].astro.sunrise: ''}
+              <i class="bi bi-brightness-alt-high text-warning mx-1"></i>
+              {response ? response.forecast.forecastday[0].astro.sunset: ''}
+            </Card.Text>
+          </div>
         </Card.Body>
       </PrincipalCard>
+
+        <Line style={{maxHeight: '300px'}}
+        data={{
+          labels: response ? response.forecast.forecastday[0].hour.map(i => timestampToHour(i.time_epoch)) : [],
+          datasets: [{
+            label: 'Temperatura (ºC)',
+            data: response ? response.forecast.forecastday[0].hour.map(i => i.temp_c) : [],
+            borderColor: 'rgb(153, 61, 0)',
+            borderWidth: 3
+          },
+          {
+            label: 'Chuva (%)',
+            data: response ? response.forecast.forecastday[0].hour.map(i => i.chance_of_rain) : [],
+            borderColor: 'rgb(51, 153, 255)',
+            borderWidth: 3
+          },
+          {
+            label: 'Vento (km/h)',
+            data: response ? response.forecast.forecastday[0].hour.map(i => i.wind_kph) : [],
+            borderColor: 'rgb(153, 153, 153)',
+            borderWidth: 3
+          }
+        ]
+        }}
+        />
 
       <Grid className="mt-3" justify={'center'}>
         {response ?
