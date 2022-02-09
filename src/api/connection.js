@@ -1,44 +1,32 @@
 import axios from "axios";
 
-const appid = '11517514426bb97c61003389242c598e';
-const units = 'metric';
-const lang = 'pt_br';
+const key = process.env.KEY;
+const days = 3;
+const lang = 'pt';
+const aqi = 'no';
+const alerts = 'no';
 
 export const weather =  axios.create({
-    baseURL: 'https://api.openweathermap.org/data/2.5'
+    baseURL: process.env.API_WEATHER_URL
 });
 
 export const city = axios.create({
-    baseURL: 'https://ipapi.co'
+    baseURL: process.env.API_IP_URL
 });
 
 export async function getCity(){
     return city.get('json');
 }
 
-export async function getTemp(lat, lon){
-    return weather.get('weather', {
-        params: {
-            'lang': lang,
-            'units': units,
-            'appid': appid,
-            'lat': lat,
-            'lon': lon
-        }
-    });
-}
-
 export async function getTempByName(name){
-    return weather.get('weather', {
+    return weather.get('forecast.json', {
         params: {
             'lang': lang,
-            'units': units,
-            'appid': appid,
-            'q':name
+            'key': key,
+            'aqi': aqi,
+            'alerts': alerts,
+            'days': days,
+            'q': name
         }
     });
-}
-
-export function getIcon(id){
-    return `http://openweathermap.org/img/wn/${id}@2x.png`;
 }
