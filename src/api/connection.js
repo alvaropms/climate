@@ -3,7 +3,7 @@ import axios from "axios";
 const key = process.env.REACT_APP_KEY;
 const days = 3;
 const lang = 'pt';
-const aqi = 'no';
+const aqi = 'yes';
 const alerts = 'no';
 
 export const weather =  axios.create({

@@ -9,7 +9,7 @@ const MyNavbar = (props) => {
         <>
         <Navbar bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand>Climate</Navbar.Brand>
+                <Navbar.Brand href="/">Climate</Navbar.Brand>
                 <StyledForm>
                 <StyledInputGroup>
                     <FormControl

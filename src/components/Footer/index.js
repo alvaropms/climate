@@ -22,7 +22,7 @@ const MyFooter = () => {
                         com o desenvolvedor para mais informações.
                         </p>
                         </div>
-                        <div className="col-md-4 col-12">
+                        <div className="col-md-4 col-12 text-center">
                         <a href="https://github.com/alvaropms/climate">Repositório deste projeto</a><br/>
                         <a href="https://react-bootstrap.netlify.app/">React-bootstrap</a><br/>
                         <a href="https://axios-http.com/">Axios</a><br/>

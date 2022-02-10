@@ -25,5 +25,4 @@ export const Title = styled.h2`
 
 export const PrincipalCard = styled(Card)`
     max-width: 600px;
-    margin: 0px auto;
 `;
