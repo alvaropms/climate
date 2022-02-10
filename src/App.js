@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getCity, getTempByName } from "./api/connection";
 import Forecast from "./components/Forecast";
 import { timestampToHour } from "./utilities/functions";
-import { GlobalStyles, Grid, Title as PageTitle, PrincipalCard, StyledForm} from "./styles";
+import { GlobalStyles, Grid, Title as PageTitle, PrincipalCard, StyledForm, Footer} from "./styles";
 import {Navbar, Container, InputGroup, FormControl, Button,
   Card
 } from 'react-bootstrap';
@@ -127,7 +127,7 @@ function App() {
                   <span>{response ? data.windspeed + " km/h": ''}</span>
                 </Grid>
               </Grid>
-              <Grid column>
+              <Grid className="me-3" column>
               <Grid>
                   <i className="me-1 bi bi-speedometer2 text-success"></i>
                   <span>{response ? data.pressure + " hPa": ''}</span>
@@ -144,7 +144,7 @@ function App() {
             </Card.Title>
             <Card.Text className="fs-6 text-center">
               {response ? response.forecast.forecastday[0].astro.sunrise: ''}
-              <i class="bi bi-brightness-alt-high text-warning mx-1"></i>
+              <i className="bi bi-brightness-alt-high text-warning mx-1"></i>
               {response ? response.forecast.forecastday[0].astro.sunset: ''}
             </Card.Text>
           </div>
@@ -189,6 +189,39 @@ function App() {
       </Grid>
 
     </Container>
+
+    <Footer>
+      <Card bg={'dark'} text={'light'}>
+        <Card.Body>
+          <Card.Title>
+            Climate
+          </Card.Title>
+          <div className="row">
+            <div className="col-md-8 col-12">
+              <p>
+              Climate é um site que apresenta os dados climáticos
+              de milhares de cidades ao redor do mundo de forma gratuita. <br/>
+              Desenvolvido com fins de aprendizado, a garantia das informações
+              prestadas não é garantida. <br/>
+              Você pode conferir o repositório deste projeto ou entrar em contato
+              com o desenvolvedor para mais informações.
+              </p>
+            </div>
+            <div className="col-md-4 col-12">
+              <a href="https://github.com/alvaropms/climate">Repositório deste projeto</a><br/>
+              <a href="https://react-bootstrap.netlify.app/">React-bootstrap</a><br/>
+              <a href="https://pt-br.reactjs.org/">React</a><br/>
+              <a href="https://www.weatherapi.com/">Weather API</a>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+      <div className="bg-dark text-light text-center px-5 pb-2"> 
+          Criador por Álvaro Melquíades &nbsp;&nbsp;&nbsp;
+          <a href="https://github.com/alvaropms"><i class="bi bi-github fs-3"></i></a>&nbsp;&nbsp;&nbsp;
+          <a href="https://www.linkedin.com/in/%C3%A1lvaro-melqu%C3%ADades-764a2a224/"><i class="bi bi-linkedin fs-3"></i></a>
+      </div>
+    </Footer>
 
     </>
   );
