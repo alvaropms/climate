@@ -27,21 +27,3 @@ export const PrincipalCard = styled(Card)`
     max-width: 600px;
     margin: 0px auto;
 `;
-
-export const StyledForm = styled.form`
-    width: 300px;
-`;
-
-export const Footer = styled.footer`
-    position: relative;
-    bottom: 0px;
-    left: 0px;
-    margin-top: 5em;
-
-    .card{
-        border: none;
-        border-radius: 0px;
-        min-height: 200px;
-        padding: .8em 1.5em;
-    }
-`;
