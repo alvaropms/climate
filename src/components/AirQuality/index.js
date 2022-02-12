@@ -112,19 +112,6 @@ const AirQuality = (props) => {
                     </a>
                     </p>
 
-                    <h3>PM10 E PM2.5</h3>
-                    <p>
-                    Os materiais particulados (PM, sigla em inglês) são partículas microscópicas
-                    liberadas pela queima de carvão, petróleo e florestas, mas também têm fontes
-                    naturais, como erupções vulcânicas e tempestades de areia.
-                    Os PM são divididos em duas categorias: PM10, que compreende partículas entre
-                    2.5 e 10 milionésimos de um milímetro ou micrômetros; e PM2.5, que é menor que
-                    2.5 micrômetros, trinta vezes menor que a espessura de um fio de cabelo humano. <a 
-                    href="https://g1.globo.com/mundo/noticia/2013/10/poluentes-atmosfericos-inimigos-invisiveis.html">
-                        Ler mais...
-                    </a>
-                    </p>
-
                     <h3>Índice EPA</h3>
                     <p>
                     É um índice usado pela Agência de Proteção Ambiental dos Estados
