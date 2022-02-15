@@ -22,9 +22,11 @@ function App() {
   const [load, setLoad] = useState(false);
 
   const { data } = useQuery('climate', async () => {
+    setLoad(true)
     const city = await getCity()
 
     const response = await getTempByName(city.data.city)
+    setLoad(false)
     return response.data
   })
 
