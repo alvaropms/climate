@@ -1,5 +1,5 @@
-import { useState, createContext } from "react";
-import { getCity, getTempByName } from "./api/connection";
+import { useState, createContext, useRef } from "react";
+import { getTempByName } from "./api/connection";
 import Forecast from "./components/Forecast";
 import { timestampToHour } from "./utilities/functions";
 import { GlobalStyles, Grid, Title as PageTitle, PrincipalCard} from "./styles";
@@ -11,46 +11,30 @@ import MyFooter from "./components/Footer";
 import AirQuality from "./components/AirQuality";
 import WinDir from "./components/WindDir";
 import Loading from "./components/Loading";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 
 Chart.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export const LoadContext = createContext();
 
 function App() {
-  const queryClient = useQueryClient();
   const [load, setLoad] = useState(false);
+  const city = useRef(null);
 
   const { data } = useQuery('climate', async () => {
     setLoad(true)
-    const city = await getCity()
-
-    const response = await getTempByName(city.data.city)
+    const response = await getTempByName(city.current)
     setLoad(false)
+
     return response.data
   })
-
-  async function changeCity(cityName){
-    setLoad(true);
-
-    getTempByName(cityName).then(
-      resp => {
-        queryClient.setQueryData('climate', resp.data)
-        setLoad(false);
-      },
-      error => {
-        alert('Cidade não encontrada!');
-        setLoad(false);
-      }
-    );
-  }
 
   return (
     <>
     <GlobalStyles />
     <LoadContext.Provider value={load}>
 
-      <MyNavbar changeCity={changeCity}/>
+      <MyNavbar cityRef={city}/>
 
       <Loading/>
 
@@ -108,20 +92,10 @@ function App() {
               </div>
             </Card.Body>
           </PrincipalCard>
-          
-          {
-          data?
-          <AirQuality air={data.current.air_quality}/>:
-          <>
-          </>
-          }
 
-          {
-          data?
-          <WinDir winddir={data.current.wind_dir}/>:
-          <>
-          </>
-          }
+          <AirQuality air={data?.current.air_quality}/>
+
+          <WinDir winddir={data?.current.wind_dir}/>
         </div>
 
 
@@ -151,14 +125,12 @@ function App() {
           />
 
         <Grid className="mt-3" justify={'center'}>
-          {data ?
-            data.forecast.forecastday.map(forecast => {
+          {
+            data?.forecast.forecastday.map(forecast => {
               return(
                 <Forecast key={forecast.date_epoch} forecast={forecast}/>
               )
             })
-            :
-            <></>
           }
         </Grid>
 

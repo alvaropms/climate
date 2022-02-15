@@ -35,8 +35,8 @@ const MyFooter = () => {
                 </Card>
                 <div className="bg-dark text-light text-center px-5 pb-2"> 
                     Criador por Álvaro Melquíades &nbsp;&nbsp;&nbsp;
-                    <a href="https://github.com/alvaropms"><i class="bi bi-github fs-3"></i></a>&nbsp;&nbsp;&nbsp;
-                    <a href="https://www.linkedin.com/in/%C3%A1lvaro-melqu%C3%ADades-764a2a224/"><i class="bi bi-linkedin fs-3"></i></a>
+                    <a href="https://github.com/alvaropms"><i className="bi bi-github fs-3"></i></a>&nbsp;&nbsp;&nbsp;
+                    <a href="https://www.linkedin.com/in/%C3%A1lvaro-melqu%C3%ADades-764a2a224/"><i className="bi bi-linkedin fs-3"></i></a>
                 </div>
             </Footer>
         </>

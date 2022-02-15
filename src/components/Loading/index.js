@@ -7,8 +7,8 @@ const Loading = () => {
 
     return(
         <>
-        <StyledLoad animation="border" variant="secondary" active={Load}/>
-        <Opacity active={Load}/>
+        <StyledLoad animation="border" variant="secondary" active={Load ? 'true' : null}/>
+        <Opacity active={Load ? 'true' : null}/>
         </>
     );
 }

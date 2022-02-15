@@ -1,9 +1,17 @@
 import React, {useState} from "react";
 import { Navbar, Button, Container, FormControl } from "react-bootstrap";
 import { StyledForm, StyledInputGroup } from "./styles";
+import { useQueryClient } from "react-query";
 
 const MyNavbar = (props) => {
+    const queryClient = useQueryClient();
     const [search, setSearch] = useState('');
+
+    function changeCity(){
+        props.cityRef.current = search
+
+        queryClient.invalidateQueries(['climate'])
+    }
     
     return(
         <>
@@ -20,7 +28,7 @@ const MyNavbar = (props) => {
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     />
-                    <Button type="submit" onClick={(e) => {e.preventDefault(); props.changeCity(search);}} variant="outline-secondary" id="button-addon2">
+                    <Button type="submit" onClick={(e) => {e.preventDefault(); changeCity();}} variant="outline-secondary" id="button-addon2">
                     <i className="bi bi-search"></i>
                     </Button>
                 </StyledInputGroup>

@@ -13,7 +13,7 @@ const AirQuality = (props) => {
     return(
         <>
         <Card style={{width: '250px'}} className="mb-1" bg={'dark'} text={'light'}>
-            <Card.Header>Qualidade do ar (μg/m<sup>3</sup>) <i class="bi bi-cloud-haze2-fill"></i></Card.Header>
+            <Card.Header>Qualidade do ar (μg/m<sup>3</sup>) <i className="bi bi-cloud-haze2-fill"></i></Card.Header>
             <Card.Body className="text-center">
                 <div className="d-flex justify-content-center">
                     <div className="d-flex flex-column me-3">

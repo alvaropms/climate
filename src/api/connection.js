@@ -19,6 +19,12 @@ export async function getCity(){
 }
 
 export async function getTempByName(name){
+    var city = ''
+    if(!name){
+        city = (await getCity()).data.city
+    }else{
+        city = name
+    }
     return weather.get('forecast.json', {
         params: {
             'lang': lang,
@@ -26,7 +32,7 @@ export async function getTempByName(name){
             'aqi': aqi,
             'alerts': alerts,
             'days': days,
-            'q': name
+            'q': city
         }
     });
 }

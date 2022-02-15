@@ -12,7 +12,7 @@ const Forecast = (props) => {
                 <Card.Title>
                     <span>{formatDate(forecast.date)}</span>
                 </Card.Title>
-                <Card.Text>
+                <div>
                     <StyledDiv>
                         <div className="d-flex flex-column justify-content-center">
                             <div>
@@ -31,7 +31,7 @@ const Forecast = (props) => {
                     <StyledDiv>
                         <span>{forecast.day.condition.text}</span>
                     </StyledDiv>
-                </Card.Text>
+                </div>
             </Card.Body>
         </Card>
         </>
