@@ -14,7 +14,7 @@ const PrincipalCard = (props) => {
                   <img alt='icon' src={data ? data.current.condition.icon : ''} />
                   <b className="fs-1">{data ? data.current.temp_c + "ºC" : ''}</b>
                 </Card.Title>
-                <Card.Text>
+                <Card.Text className="text-center">
                   <span className="fs-6" >{data ? data.current.condition.text: ''}</span>
                 </Card.Text>
               </div>
